@@ -1,6 +1,5 @@
 package com.tenco.blog.board;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -83,6 +82,8 @@ public class BoardController {
         // PGR
         return "redirect:/";
     }
+
+
 
 
 }

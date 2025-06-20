@@ -36,7 +36,7 @@ public class BoardPersistRepositoryTest {
         List<Board> boardList = br.findAll();
         // then
         System.out.println("size test = " + boardList.size());
-        System.out.println("1st title check= " + boardList.get(0).getTitle());
+        System.out.println("1st title check= " + boardList.getFirst().getTitle());
 
         // Native Query 를 사용한다는 것을 영속 context를 우회해서 일 처리
         // JPQL 바로 영속성 context를 우회하지만 조회된 이후에는 영속성 상태가 된다

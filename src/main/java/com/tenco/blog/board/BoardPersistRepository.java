@@ -45,21 +45,21 @@ public class BoardPersistRepository {
     }
 
     // JPQL 게시글 한건 조회(비교용)
-    public Board findByIdJPQL(Long id) {
-        // Named parameter recommended
-        String jpql = "select b from Board b where b.id = :id ";
-
-//        Query query = em.createQuery(jpql,Board.class);
-//        query.setParameter("id", id);
-//        Board board = (Board) query.getSingleResult();
-        try {
-            return em.createQuery(jpql, Board.class)
-                    .setParameter("id", id)
-                    .getSingleResult(); // Warning! 결과가 없으면 무조건 NoResultException 발생!
-        } catch (Exception e) {
-            return null;
-        }
-    }
+//    public Board findByIdJPQL(Long id) {
+//        // Named parameter recommended
+//        String jpql = "select b from Board b where b.id = :id ";
+//
+////        Query query = em.createQuery(jpql,Board.class);
+////        query.setParameter("id", id);
+////        Board board = (Board) query.getSingleResult();
+//        try {
+//            return em.createQuery(jpql, Board.class)
+//                    .setParameter("id", id)
+//                    .getSingleResult(); // Warning! 결과가 없으면 무조건 NoResultException 발생!
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
     // JPQL 단점 :
     // 1. 1차 캐시 우회하여 항상 DB 접근
     // 2. 코드가 복잡
