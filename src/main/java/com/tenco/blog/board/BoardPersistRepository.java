@@ -21,19 +21,17 @@ public class BoardPersistRepository {
         String jpql = "update Board b " +
                 "set b.title = :title, b.content = :content, b.username = :username " +
                 "where b.id = :id ";
-        Query q = em.createQuery(jpql);
-        q.setParameter("title", title);
-        q.setParameter("content", content);
-        q.setParameter("username", username);
-        q.setParameter("id", id);
+        Query q = em.createQuery(jpql).setParameter("title", title)
+                .setParameter("content", content)
+                .setParameter("username", username)
+                .setParameter("id", id);
         q.executeUpdate();
     }
 
     @Transactional
     public void deleteById(Long id) {
         String jpql = "delete from Board b where b.id = :id ";
-        Query q = em.createQuery(jpql);
-        q.setParameter("id", id);
+        Query q = em.createQuery(jpql).setParameter("id", id);
         q.executeUpdate();
     }
 
@@ -49,9 +47,10 @@ public class BoardPersistRepository {
 //        // Named parameter recommended
 //        String jpql = "select b from Board b where b.id = :id ";
 //
-////        Query query = em.createQuery(jpql,Board.class);
-////        query.setParameter("id", id);
-////        Board board = (Board) query.getSingleResult();
+
+    /// /        Query query = em.createQuery(jpql,Board.class);
+    /// /        query.setParameter("id", id);
+    /// /        Board board = (Board) query.getSingleResult();
 //        try {
 //            return em.createQuery(jpql, Board.class)
 //                    .setParameter("id", id)
@@ -74,7 +73,7 @@ public class BoardPersistRepository {
         /* Query query = em.createQuery(jpql, Board.class);
            List<Board> boardList = query.getResultList();
            return boardList; */
-        return em.createQuery(jpql, Board.class).getResultList();
+        return em.createQuery(jpql, Board.class).setMaxResults(5).getResultList();
     }
 
 
