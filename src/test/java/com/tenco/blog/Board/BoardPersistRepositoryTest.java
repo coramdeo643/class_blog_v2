@@ -16,6 +16,16 @@ public class BoardPersistRepositoryTest {
     private BoardPersistRepository br;
 
     @Test
+    public void findAll_test() {
+        // given = db/data.sql
+
+        // when
+
+        // then
+    }
+
+
+    @Test
     public void save_test() {
         // given
         Board board = new Board("제목111", "내용111", "작성자111");

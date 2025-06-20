@@ -2,10 +2,13 @@ package com.tenco.blog.board;
 
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor // 필수 멤버변수 확인해서 생성자에 등록해줌
 @Repository //IoC 대상 - Singleton pattern
@@ -13,6 +16,22 @@ public class BoardPersistRepository {
     // JPA core Interface
     // @Autowired // = DI // final 쓰면 autowired 사용불가
     private final EntityManager em;
+
+    // JPQL 사용 게시글 목록 조회
+    public List<Board> findAll() {
+        // JPQL : Entity 객체를 대상으로 하는 객체지향 쿼리
+        // Board = Entity Class, b = Alias
+        String jpql = "select b from board b order by b.createdAt desc";
+        // em.createNativeQuery() = v1
+        /*
+          Query query = em.createQuery(jpql, Board.class);
+          List<Board> boardList = query.getResultList();
+          return boardList;
+         */
+
+        return em.createQuery(jpql, Board.class).getResultList();
+    }
+
 
     // 게시글 저장 기능 - 영속성 컨텍스트 활용
     @Transactional
