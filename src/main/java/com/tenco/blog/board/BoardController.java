@@ -17,7 +17,7 @@ public class BoardController {
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
 
-    // 게시글 상세 보기(주소솔계
+    // 게시글 상세 보기(주소설계)
     // GET : http://localhost:8080/boarder/3
     @GetMapping("/board/{id}")
     public String detail(@PathVariable(name = "id") Long id, HttpServletRequest request) {
