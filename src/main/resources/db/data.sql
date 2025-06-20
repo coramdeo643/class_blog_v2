@@ -1,7 +1,7 @@
-insert into board_tb(title, content, username, created_at) values('제목1','This is 1','ssar',now());
-insert into board_tb(title, content, username, created_at) values('제목2','내용2','ssar',now());
-insert into board_tb(title, content, username, created_at) values('제목3','내용3','cos',now());
-insert into board_tb(title, content, username, created_at) values('제목4','내용4','love',now());
+insert into board_tb(title, content, username, created_at) values('Title 1','Text 1','User 1',now());
+insert into board_tb(title, content, username, created_at) values('Title 2','Text 2','User 2',now());
+insert into board_tb(title, content, username, created_at) values('Title 3','Text 3','User 3',now());
+insert into board_tb(title, content, username, created_at) values('Title 4','Text 4','User 4',now());
 
 -- TRM : Table Relational Mapping
 -- ORM : Object Relational Mapping;

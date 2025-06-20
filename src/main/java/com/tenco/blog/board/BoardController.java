@@ -17,6 +17,16 @@ public class BoardController {
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
 
+    // 게시글 상세 보기(주소솔계
+    // GET : http://localhost:8080/boarder/3
+    @GetMapping("/board/{id}")
+    public String detail(@PathVariable(name = "id") Long id, HttpServletRequest request) {
+        Board board = br.findById(id);
+        request.setAttribute("board", board);
+        // 1차 캐시 효과 - DB 접근하지않고 바로 영속성 context 에서 가져옴
+        return "board/detail";
+    }
+
     // 목록 화면 연결
     // 1. index.mustache 파일 변환 기능
     // 주소 = http://localhost:8080/, http://localhost:8080/index

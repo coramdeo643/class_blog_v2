@@ -4,7 +4,6 @@ package com.tenco.blog.board;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,18 +16,48 @@ public class BoardPersistRepository {
     // @Autowired // = DI // final 쓰면 autowired 사용불가
     private final EntityManager em;
 
+    // 게시글 한건 조회 쿼리
+    // em.find() / JPQL / NativeQuery (상황에 맞게 적절한 기술 사용)
+    public Board findById(Long id) {
+        // 1차 캐시 활용
+        return em.find(Board.class, id);
+    }
+
+    // JPQL 게시글 한건 조회(비교용)
+    public Board findByIdJPQL(Long id) {
+        // Named parameter recommended
+        String jpql = "select b from Board b where b.id = :id ";
+
+//        Query query = em.createQuery(jpql,Board.class);
+//        query.setParameter("id", id);
+//        Board board = (Board) query.getSingleResult();
+        try {
+            return em.createQuery(jpql, Board.class)
+                    .setParameter("id", id)
+                    .getSingleResult(); // Warning! 결과가 없으면 무조건 NoResultException 발생!
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    // JPQL 단점 :
+    // 1. 1차 캐시 우회하여 항상 DB 접근
+    // 2. 코드가 복잡
+    // 3. 예외처리 필요
+
+    // find + JPQL 셀프 페스트
+
+
+    
+
     // JPQL 사용 게시글 목록 조회
     public List<Board> findAll() {
         // JPQL : Entity 객체를 대상으로 하는 객체지향 쿼리
         // Board = Entity Class, b = Alias
         String jpql = "select b from Board b order by b.id desc ";
         // em.createNativeQuery() = v1
-        /*
-          Query query = em.createQuery(jpql, Board.class);
-          List<Board> boardList = query.getResultList();
-          return boardList;
-         */
-
+        /* Query query = em.createQuery(jpql, Board.class);
+           List<Board> boardList = query.getResultList();
+           return boardList; */
         return em.createQuery(jpql, Board.class).getResultList();
     }
 
