@@ -82,8 +82,4 @@ public class BoardController {
         // PGR
         return "redirect:/";
     }
-
-
-
-
 }
