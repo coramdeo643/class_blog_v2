@@ -1,5 +1,6 @@
 package com.tenco.blog.board;
 
+import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,16 @@ public class BoardController {
 
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
+
+    // 목록 화면 연결
+    // 1. index.mustache 파일 변환 기능
+    // 주소 = http://localhost:8080/, http://localhost:8080/index
+    @GetMapping({"/","/index"})
+    public String boardList(HttpServletRequest request) {
+        List<Board> boardList = br.findAll();
+        request.setAttribute("boardList", boardList);
+        return "index";
+    }
 
     // 게시글 작성 화면 연결 처리
     @GetMapping("/board/save-form")

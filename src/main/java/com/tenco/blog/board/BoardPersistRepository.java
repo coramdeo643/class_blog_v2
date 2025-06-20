@@ -21,7 +21,7 @@ public class BoardPersistRepository {
     public List<Board> findAll() {
         // JPQL : Entity 객체를 대상으로 하는 객체지향 쿼리
         // Board = Entity Class, b = Alias
-        String jpql = "select b from board b order by b.createdAt desc";
+        String jpql = "select b from Board b order by b.id desc ";
         // em.createNativeQuery() = v1
         /*
           Query query = em.createQuery(jpql, Board.class);
