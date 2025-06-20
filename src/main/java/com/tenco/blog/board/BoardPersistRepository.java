@@ -19,14 +19,22 @@ public class BoardPersistRepository {
     @Transactional
     public void updateById(Long id, String title, String content, String username) {
         String jpql = "update Board b " +
-                      "set b.title = :title, b.content = :content, b.username = :username " +
-                      "where b.id = :id ";
-            Query q = em.createQuery(jpql);
-            q.setParameter("title", title);
-            q.setParameter("content", content);
-            q.setParameter("username", username);
-            q.setParameter("id", id);
-            q.executeUpdate();
+                "set b.title = :title, b.content = :content, b.username = :username " +
+                "where b.id = :id ";
+        Query q = em.createQuery(jpql);
+        q.setParameter("title", title);
+        q.setParameter("content", content);
+        q.setParameter("username", username);
+        q.setParameter("id", id);
+        q.executeUpdate();
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        String jpql = "delete from Board b where b.id = :id ";
+        Query q = em.createQuery(jpql);
+        q.setParameter("id", id);
+        q.executeUpdate();
     }
 
     // 게시글 한건 조회 쿼리
@@ -93,7 +101,6 @@ public class BoardPersistRepository {
 
         return board;
     }
-
 
 
 }

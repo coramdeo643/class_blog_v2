@@ -35,6 +35,12 @@ public class BoardController {
         return "redirect:/board/" + id;
     }
 
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable(name = "id") Long id) {
+        br.deleteById(id);
+        return "redirect:/";
+    }
+
 
     // 게시글 상세 보기(주소설계)
     // GET : http://localhost:8080/boarder/3
