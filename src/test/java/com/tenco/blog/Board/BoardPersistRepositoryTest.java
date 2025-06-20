@@ -18,6 +18,18 @@ public class BoardPersistRepositoryTest {
     private BoardPersistRepository br;
 
     @Test
+    public void findById_test() {
+        // given
+        Long id = 1L;
+        // when
+        Board board = br.findById(id);
+        // then
+        Assertions.assertThat(board.getId()).isEqualTo(id);
+        Assertions.assertThat(board.getTitle()).isEqualTo("Title 1");
+        Assertions.assertThat(board.getId()).isNotNull();
+    }
+
+    @Test
     public void findAll_test() {
         // given = db/data.sql
         // when
@@ -33,7 +45,6 @@ public class BoardPersistRepositoryTest {
             Assertions.assertThat(board.getId()).isNotNull();
         }
     }
-
 
     @Test
     public void save_test() {

@@ -17,6 +17,25 @@ public class BoardController {
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
 
+    // 게시글 수정하기 화면 연결
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable(name = "id") Long id,
+                             HttpServletRequest request) {
+       Board board = br.findById(id);
+       request.setAttribute("board", board);
+       return "board/update-form";
+    }
+
+    @PostMapping("/board/{id}/update-form")
+    public String update(@PathVariable(name="id") Long id,
+                         @RequestParam(name = "title") String title,
+                         @RequestParam(name = "content") String content,
+                         @RequestParam(name = "username") String username) {
+        br.updateById(id, title, content, username);
+        return "redirect:/board/" + id;
+    }
+
+
     // 게시글 상세 보기(주소설계)
     // GET : http://localhost:8080/boarder/3
     @GetMapping("/board/{id}")

@@ -16,6 +16,19 @@ public class BoardPersistRepository {
     // @Autowired // = DI // final 쓰면 autowired 사용불가
     private final EntityManager em;
 
+    @Transactional
+    public void updateById(Long id, String title, String content, String username) {
+        String jpql = "update Board b " +
+                      "set b.title = :title, b.content = :content, b.username = :username " +
+                      "where b.id = :id ";
+            Query q = em.createQuery(jpql);
+            q.setParameter("title", title);
+            q.setParameter("content", content);
+            q.setParameter("username", username);
+            q.setParameter("id", id);
+            q.executeUpdate();
+    }
+
     // 게시글 한건 조회 쿼리
     // em.find() / JPQL / NativeQuery (상황에 맞게 적절한 기술 사용)
     public Board findById(Long id) {
@@ -43,11 +56,6 @@ public class BoardPersistRepository {
     // 1. 1차 캐시 우회하여 항상 DB 접근
     // 2. 코드가 복잡
     // 3. 예외처리 필요
-
-    // find + JPQL 셀프 페스트
-
-
-    
 
     // JPQL 사용 게시글 목록 조회
     public List<Board> findAll() {
