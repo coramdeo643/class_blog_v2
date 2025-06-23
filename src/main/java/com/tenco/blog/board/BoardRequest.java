@@ -27,13 +27,28 @@ public class BoardRequest {
 
     } // SaveDTO
 
+    // 게시글 수정용 DTO 추가
+    @Data
+    public static class UpdateDTO {
+        private String title;
+        private String content;
+        private String username;
+
+        // 검증 method(유효성 검사 기능 추가)
+        public void validate() throws IllegalAccessException {
+            if (title == null || title.trim().isEmpty()) {
+                throw new IllegalAccessException("Insert the title");
+            }
+            if (content == null || content.trim().isEmpty()) {
+                throw new IllegalAccessException("Insert the content");
+            }
+            if (username == null || username.trim().isEmpty()) {
+                throw new IllegalAccessException("Insert the username");
+            }
+        }
+    }
+
     /**
-     *     @Data
-     *     public static class UpdateDTO {
-     *         private Long id;
-     *         private String title;
-     *         private String content;
-     *     }
      *
      *     @Data
      *     public static class DeleteDTO {

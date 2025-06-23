@@ -16,6 +16,23 @@ public class BoardPersistRepository {
     // @Autowired // = DI // final 쓰면 autowired 사용불가
     private final EntityManager em;
 
+    // 게시글 수정(DB 접근 계층)
+    @Transactional
+    public void update(Long boardId, BoardRequest.UpdateDTO updateDTO) {
+        Board board = findById(boardId);
+        // board -> persist context 1st cache key=value 값이 저장 되어있다
+        board.setTitle(updateDTO.getTitle());
+        board.setContent(updateDTO.getContent());
+        board.setUsername(updateDTO.getUsername());
+        // Transaction 끝나면 persist context 에서 변경 감지를 한다
+        // 변경 감지(Dirty Checking)
+        // 1. 영속성 컨텍스트가 엔티티 최초상태를 스냅샷으로 보관
+        // 2. 필드 값 변경시 현재 상태와 스냅샷 비교
+        // 3. 트랜잭션 커밋 시점에 변경된 필드만 UPDATE 쿼리를 자동 생성
+        // 4. update board_tb set title=?, content=?, username=? where id = ?
+        // .
+    }
+
     // 게시글 한건 조회 쿼리
     // em.find() / JPQL / NativeQuery (상황에 맞게 적절한 기술 사용)
     public Board findById(Long id) {
@@ -46,8 +63,6 @@ public class BoardPersistRepository {
 
     // find + JPQL 셀프 페스트
 
-
-    
 
     // JPQL 사용 게시글 목록 조회
     public List<Board> findAll() {
@@ -85,7 +100,6 @@ public class BoardPersistRepository {
 
         return board;
     }
-
 
 
 }

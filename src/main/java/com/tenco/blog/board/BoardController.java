@@ -17,6 +17,35 @@ public class BoardController {
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
 
+    /**
+     * address : http://localhost:8080/boarder/{id}/update-form
+     * @return : update-form.mustache
+     * @param : id(board pk)
+     * @GetMapping
+     */
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable(name = "id") Long id, HttpServletRequest request) {
+        // select * from board-tb where id = 4;
+        Board board = br.findById(id);
+        // mustache file 조회된 data binding 처리
+        request.setAttribute("board", board);
+        return "board/update-form";
+    }
+
+    @PostMapping("/board/{id}/update-form")
+    public String update(@PathVariable(name = "id") Long id, BoardRequest.UpdateDTO reqDTO) {
+        System.out.println("정상 파싱 확인"+reqDTO.toString());
+        // Transaction
+        // 수정 -- select - 값을 확인 - data 수정 --> update
+        // JPA persist context 활용
+        // reqDTO.validate();
+        br.update(id, reqDTO);
+        // 수정 전략을 Dirty checking 활용
+        // 장점 : update 쿼리 자동생성 / 변경 필드만 update / 영속성 컨텍스트 일관성 유지 / 1차 캐시 자동 갱신
+        // 성공 시 리스트 화면으로 redirect
+        return "redirect:/";
+    }
+
     // 게시글 상세 보기(주소설계)
     // GET : http://localhost:8080/boarder/3
     @GetMapping("/board/{id}")
