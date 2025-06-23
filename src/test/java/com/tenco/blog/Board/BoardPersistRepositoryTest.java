@@ -18,6 +18,22 @@ public class BoardPersistRepositoryTest {
     private BoardPersistRepository br;
 
     @Test
+    public void deleteById_test() {
+        // given
+        Long id = 1L;
+        // when
+        // 삭제할 게시글이 실제로 존재하는지 확인
+        Board targetBoard = br.findById(id);
+        Assertions.assertThat(targetBoard).isNotNull();
+        // persist context 에서 delete
+        br.deleteById(id);
+        // then
+        List<Board> afterDeleteBoardList = br.findAll();
+        Assertions.assertThat(afterDeleteBoardList.size()).isEqualTo(3);
+    }
+
+
+    @Test
     public void findAll_test() {
         // given = db/data.sql
         // when

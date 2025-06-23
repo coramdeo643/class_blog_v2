@@ -16,6 +16,21 @@ public class BoardPersistRepository {
     // @Autowired // = DI // final 쓰면 autowired 사용불가
     private final EntityManager em;
 
+    // Post delete(persist context)
+    @Transactional
+    public void deleteById(Long id) {
+        // 1. 먼저 삭제할 entity를 영속 상태로 조회
+        Board board = em.find(Board.class, id);
+        // 영속 상태의 entity를 삭제 상태로 변경
+        em.remove(board);
+        // transaction이 커밋 되는 순간 삭제 처리
+        // remove() process :
+        // 1. Board entity 영속 상태에서 remove() call, 삭제 상태로 변경
+        // 2. 1차 cache 에서 해당 entity delete
+        // 3. transaction commit 시점에 delete SQL 자동 실행
+        // 4. 연관관계 처리 자동 수행(cascade 설정 시).
+    }
+
     // 게시글 수정(DB 접근 계층)
     @Transactional
     public void update(Long boardId, BoardRequest.UpdateDTO updateDTO) {

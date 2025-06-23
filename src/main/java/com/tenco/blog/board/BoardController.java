@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,10 +18,17 @@ public class BoardController {
     // 생성자 의존 주입 - DI 처리
     private final BoardPersistRepository br;
 
+    // address : /board/{{board.id}}/delete
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable(name = "id") Long id) {
+        br.deleteById(id);
+        return "redirect:/";
+    }
+
     /**
      * address : http://localhost:8080/boarder/{id}/update-form
-     * @return : update-form.mustache
      * @param : id(board pk)
+     * @return : update-form.mustache
      * @GetMapping
      */
     @GetMapping("/board/{id}/update-form")
@@ -34,7 +42,7 @@ public class BoardController {
 
     @PostMapping("/board/{id}/update-form")
     public String update(@PathVariable(name = "id") Long id, BoardRequest.UpdateDTO reqDTO) {
-        System.out.println("정상 파싱 확인"+reqDTO.toString());
+        System.out.println("정상 파싱 확인" + reqDTO.toString());
         // Transaction
         // 수정 -- select - 값을 확인 - data 수정 --> update
         // JPA persist context 활용
@@ -59,7 +67,7 @@ public class BoardController {
     // 목록 화면 연결
     // 1. index.mustache 파일 변환 기능
     // 주소 = http://localhost:8080/, http://localhost:8080/index
-    @GetMapping({"/","/index"})
+    @GetMapping({"/", "/index"})
     public String boardList(HttpServletRequest request) {
         List<Board> boardList = br.findAll();
         request.setAttribute("boardList", boardList);
